@@ -8,10 +8,8 @@ import java.util.stream.Collectors;
 public class LogicsImpl implements Logics {
 
 	private List<Integer> valuesList = new ArrayList<>();
-	private List<Boolean> enableList = new ArrayList<>();
 
 	public LogicsImpl(int size) {
-		this.enableList.addAll(Collections.nCopies(size, true));
 		this.valuesList.addAll(Collections.nCopies(size, 0));
 	}
 
@@ -27,7 +25,7 @@ public class LogicsImpl implements Logics {
 
 	@Override
 	public List<Boolean> enablings() {
-		return this.enableList = values().stream().map(t -> t < size()).collect(Collectors.toList()); 
+		return values().stream().map(t -> t < size()).collect(Collectors.toList()); 
 	}
 
 	@Override

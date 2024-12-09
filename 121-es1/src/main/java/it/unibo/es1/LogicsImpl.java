@@ -1,46 +1,54 @@
 package it.unibo.es1;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LogicsImpl implements Logics {
 
+	private List<Integer> valuesList = new ArrayList<>();
+	private List<Boolean> enableList = new ArrayList<>();
+
 	public LogicsImpl(int size) {
-		//TODO Auto-generated constructor stub
+		this.enableList.addAll(Collections.nCopies(size, true));
+		this.valuesList.addAll(Collections.nCopies(size, 0));
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'size'");
+		return this.valuesList.size();
 	}
 
 	@Override
 	public List<Integer> values() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'values'");
+		return this.valuesList;
 	}
 
 	@Override
 	public List<Boolean> enablings() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'enablings'");
+		return this.enableList = values().stream().map(t -> t < size()).collect(Collectors.toList()); 
 	}
 
 	@Override
 	public int hit(int elem) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'hit'");
+		final int newElem = this.valuesList.get(elem) + 1;
+		if(newElem > size()) {
+			return this.valuesList.get(elem);
+		}
+		else {
+			this.valuesList.set(elem, newElem);
+			return newElem;
+		}
 	}
 
 	@Override
 	public String result() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'result'");
+		return "<<" + this.valuesList.stream().map(t -> String.valueOf(t)).collect(Collectors.joining("|")) + ">>";
 	}
 
 	@Override
 	public boolean toQuit() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'toQuit'");
+		return this.valuesList.stream().allMatch(t -> t == this.valuesList.getFirst());
 	}
 }
